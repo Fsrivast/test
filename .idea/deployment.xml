@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="13.126.115.120">
+    <serverData>
+      <paths name="13.126.115.120">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ansadmin/web_app" local="$PROJECT_DIR$" web="/" />
+            <mapping local="" />
+            <mapping local="" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>

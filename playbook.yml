@@ -1,0 +1,62 @@
+- name: Deploy a web application
+  hosts: all_hosts
+  become  : yes
+  connection: ssh
+  tasks:
+
+    - name: Download sources
+      get_url :
+          url: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+          dest: /opt/mysql
+
+    - name: Install package
+      yum:
+          name: /opt/mysql/mysql-community-release-el7-5.noarch.rpm
+          state: present
+
+    - name: Install My SQL database
+      yum:
+       name: ['mysql-server']
+
+    - name: Start MySQL Service
+      service:
+       name: mysql
+       state: started
+       enabled: yes
+
+    - name: Create Database
+      mssql_db:
+        name: employee_db
+        state: present
+        login_host: "localhost"
+
+    - name: Create User
+      mysql_user:
+          name: db_user
+          password: 12345
+          priv: '*.*:ALL,GRANT'
+          state: present
+          host: '%'
+
+    - name: Install Python flask dependency
+      pip:
+       name: "{{ item }}"
+       state: present
+       with_items:
+         - flask
+         - flask-mysql
+
+    - name: Copy source Code
+      copy: src=app.py dest=/opt/app.py
+
+    - name: Start Web Server
+      shell: FLASK_APP=app.py nohup flask run--host=0.0.0.0 &
+
+
+
+
+
+
+
+
+
